@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  dynamodb:
+    image: ryanratcliff/dynamodb
+    ports:
+      - 8000:8000
+    volumes:
+    - /var/lib/containers/dynamodb/data:/var/dynamodb_data
+
+  s3:
+    image: minio/minio
+    environment:
+      - MINIO_ACCESS_KEY=WLGDGYAQYIGI833EV05A
+      - MINIO_SECRET_KEY=BYvgJM101sHngl2uzjXS
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/lib/containers/s3/data:/export
+      - /var/lib/containers/s3/config:/root/.minio
+    entrypoint:
+      - /start.sh
+      - /export
